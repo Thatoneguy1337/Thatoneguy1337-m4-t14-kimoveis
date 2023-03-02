@@ -30,10 +30,12 @@ class realState {
   @UpdateDateColumn()
   UpdateDateColumn:string;
   
-  @ManyToMany(()=> Adresses,Categories,{nullable:false})
+  @ManyToMany(()=> Adresses,{nullable:false})
   
   @JoinColumn()
   adressesId : Adresses;
+  
+  @ManyToMany(()=> Categories,{nullable:false})
   
   @JoinColumn()
   categoriesId:Categories;

@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn,
 } from "typeorm";
 
 @Entity("users")
@@ -24,10 +24,10 @@ class Users {
   @Column({ type: "boolean", default: false })
   admin: boolean;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: false })
   createdAt: string;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: false })
   updatedAt: string;
 
   @DeleteDateColumn()
