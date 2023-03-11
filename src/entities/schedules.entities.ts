@@ -4,35 +4,30 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
-
   Timestamp,
   ManyToOne,
 } from "typeorm";
 
-import Users from "./users.entities";
-import realState from "./real_estate.entity";
+import User from "./users.entities";
+import RealState from "./real_estate.entities";
 
 @Entity("schedule_users_profiles")
 class Schedule {
-@Column({type:"date", nullable:false})
-date:Date;
+  
+  @PrimaryGeneratedColumn("increment")
+  id: number;
 
-@Column({type:"datetime",nullable:false})
-hour:Timestamp;
+  @Column({ type: "date"})
+  date: string;
 
+  @Column({ type: "time"})
+  hour: string;
 
+  @ManyToOne(() => User)
+  user: User;
 
-@OneToOne(()=>Users, {nullable:false})
-
-@JoinColumn()
-usersId:Users
-
-@ManyToOne(()=> realState, {nullable:false})
-
-@JoinColumn()
-realStateId:realState
-
-
+  @ManyToOne(() => RealState)
+  realEstate: RealState;
 }
 
-export default Schedule
+export default Schedule;

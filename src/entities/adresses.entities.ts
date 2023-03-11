@@ -1,25 +1,32 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn,AfterLoad } from "typeorm";
 
 
 @Entity("adresses")
 
-class Adresses{
+class Address{
 
-@Column({length:45, nullable:false})
-street:string;
+    @PrimaryGeneratedColumn("increment")
+  id: number;
 
-@Column({length:8, nullable: false})
-zipCode:string;
+  @Column({ type: "varchar", length: 45 })
+  street: string;
 
-@Column({length:6, nullable:false})
-city:string;
+  @Column({ type: "varchar", length: 8 })
+  zipCode: string;
 
-@Column({length:2, nullable:false})
-state:string;
+  @Column({ type: "varchar", length: 6, nullable: true })
+  number?: string | null | undefined;
+
+  @Column({ type: "varchar", length: 20 })
+  city: string;
+
+  @Column({ type: "varchar", length: 2 })
+  state: string;
 
 }
 
-export default Adresses
+
+export default Address;
 
 
 
