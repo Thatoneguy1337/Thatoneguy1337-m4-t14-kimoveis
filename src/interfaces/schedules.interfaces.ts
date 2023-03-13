@@ -1,9 +1,6 @@
 import { z } from "zod";
-import { createSchedulesSchema, schedulesSchemaReturn, schedulesList } from "../schema/schedules.schema";
+import { createScheduleSchema } from "../schema/schedules.schema";
 
-type ISchedule = z.infer<typeof createSchedulesSchema>
-type IScheduleReturn = z.infer<typeof schedulesSchemaReturn>
-type ISchedulesList = z.infer<typeof schedulesList>
+type ICreateSchedule = z.infer<typeof createScheduleSchema>;
 
-
-export {ISchedule, IScheduleReturn, ISchedulesList}
+export { ICreateSchedule };

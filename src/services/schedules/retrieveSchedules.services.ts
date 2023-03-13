@@ -3,27 +3,24 @@ import { AppDataSource } from "../../data-source";
 import { RealEstate } from "../../entities";
 import { AppError } from "../../error";
 
-const listSchedulesService = async (realEstateId: number) => {
-  const realEstateRepository: Repository<RealEstate> = AppDataSource.getRepository(RealEstate)
-  
-  const realEstate: RealEstate | null = await realEstateRepository.findOne({
-    where: {
-      id: realEstateId,
-    },
-    relations: {
-      address: true,
-      category: true,
-      schedules: {
-        user: true
-      }
-    }
-  })
+const listSchedulesService = async (realEstateId: number): Promise<RealEstate> => {
 
-  if (!realEstate) {
-    throw new AppError("RealEstate not found", 404)
+  const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate)
+
+  const findRealEstate = await realEstateRepo
+  .createQueryBuilder("realEstate")
+  .innerJoinAndSelect("realEstate.address", "address")
+  .leftJoinAndSelect("realEstate.schedules", "schedule")
+  .leftJoinAndSelect("schedule.user", "user.id")
+  .leftJoinAndSelect("realEstate.category", "category")
+  .where("realEstate.id = :id", { id: realEstateId })
+  .getOne();
+
+  if(!findRealEstate){
+      throw new AppError("RealEstate not found", 404)
   }
-
-  return realEstate
-};
+  console.log(findRealEstate)
+  return findRealEstate
+}
 
   export default listSchedulesService

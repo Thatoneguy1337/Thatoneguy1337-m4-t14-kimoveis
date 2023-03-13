@@ -1,15 +1,18 @@
 import { Repository } from "typeorm";
 import { User } from "../../entities";
 import { AppDataSource } from "../../data-source";
-import { IUsersReturn } from "../../interfaces/user.interfaces";
-import { returnAllUsersSchema } from "../../schema/users.schema";
+import { IListUsers } from "../../interfaces/user.interfaces";
+import { userListSchema} from "../../schema/users.schema";
 
-const listUsersService = async (): Promise<IUsersReturn> => {
-  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+const listUsersService = async (): Promise<IListUsers> => {
 
-  const users = returnAllUsersSchema.parse(userRepository);
+  const userRepository: Repository<User> = AppDataSource.getRepository(User)
 
-  return users;
-};
+  const findUsers: Array<User> = await userRepository.find()
+
+  const users = userListSchema.parse(findUsers)
+
+  return users
+}
 
 export default listUsersService;

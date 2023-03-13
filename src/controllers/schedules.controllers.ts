@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
 import { RealEstate } from "../entities/index";
-import { ISchedule, ISchedulesList } from "../interfaces/schedules.interfaces";
+import { ICreateSchedule } from "../interfaces/schedules.interfaces";
 import createScheduleServices from "../services/schedules/createSchedule.services";
 import  listSchedulesService  from "../services/schedules/retrieveSchedules.services";
 
 
 const createScheduleController = async ( request: Request, response: Response): Promise<Response> => {
-    const scheduleData: ISchedule = request.body;
-    const userId: number = Number(request.params.id)
-   
-    await createScheduleServices(scheduleData, userId)
+  const data: ICreateSchedule = request.body;
+
+  const idUSer: number = request.user.id;
+
+  const newDateSchedule: { message: string } = await createScheduleServices(data, idUSer);
    
     return response.status(201).json({
       message: "Schedule created"

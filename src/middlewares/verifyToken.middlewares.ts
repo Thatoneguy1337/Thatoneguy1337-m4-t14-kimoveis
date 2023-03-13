@@ -1,33 +1,35 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../error";
-import jwt from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 import "dotenv/config";
 
-const verifyTokenMiddleware = (
+const verifyTokenMiddleware = async(
   req: Request,
   res: Response,
   next: NextFunction
-): Response | void => {
-  let token = req.headers.authorization;
-
-  if (!token) {
-    throw new AppError("Missing bearer token", 401);
-  }
-
-  token = token.split(" ")[1];
-
-  jwt.verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
-    if (error) {
-      throw new AppError(error.message, 401);
+): Promise <Response | void> => {
+  const authToken = req.headers.authorization;
+  
+    if (!authToken || authToken.length < 7) {
+      throw new AppError("Missing bearer token", 401);
     }
-
-    req.user = {
-      id: Number(decoded.sub),
-      admin: decoded.admin,
-    };
-
-    return next();
-  });
+    const token: string = authToken.split(" ")[1];
+  
+    return verify(
+      token,
+      String(process.env.SECRET_KEY),
+      (error: any, decoded: any) => {
+        if (error) {
+          throw new AppError(error.message, 401);
+        }
+  
+        req.user = {
+          id: parseInt(decoded.sub),
+          admin: decoded.admin,
+        };
+        return next();
+      }
+    );
 };
 
-export default verifyTokenMiddleware
+export default verifyTokenMiddleware;

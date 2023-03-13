@@ -1,24 +1,25 @@
-import {ICategories,ICategoriesReturn} from "../../interfaces/categories.interfaces"
+import {
+  ICategories,
+  ICreateCategories,
+} from "../../interfaces/categories.interfaces";
 import { AppDataSource } from "../../data-source";
 import { Category } from "../../entities";
 import { Repository } from "typeorm";
-import {categoriesSchemaReturn } from "../../schema/categories.schema"
+import { categoriesSchema } from "../../schema/categories.schema";
 
-const createCategoriesService = async(categoriesData:ICategories): Promise<ICategoriesReturn> => {
+const createCategoriesService = async (
+  payload: ICreateCategories
+): Promise<ICategories> => {
+  const categoryRepo: Repository<Category> =
+    AppDataSource.getRepository(Category);
 
-    const categoriesRepository: Repository<Category> = AppDataSource.getRepository(Category);
+  const category: Category = categoryRepo.create(payload);
 
-    const categories: Category = categoriesRepository.create(categoriesData);
-  
-    await categoriesRepository.save(categories);
-  
-    const newCategories = categoriesSchemaReturn .parse(categories);
-  
-    return newCategories;
+  await categoryRepo.save(category);
 
-}
+  const newCategory = categoriesSchema.parse(category);
 
-export default createCategoriesService
+  return newCategory;
+};
 
-
-
+export default createCategoriesService;

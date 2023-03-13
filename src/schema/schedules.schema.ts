@@ -1,24 +1,38 @@
 import { z } from "zod";
-import { returnUserSchema } from "./users.schema";
-import {createUserSchema} from "./users.schema";
-import {returnRealEstateSchema} from "./real_estate.schema"
+import { realEstateSchema } from "./real_estate.schema";
+import { returnCreateUserSchema, userSchema } from "./users.schema";
 
-const createSchedulesSchema = z.object({
-  date: z.string(),
-  hour: z.string(),
-  realEstateId: z.number(),
+const scheduleSchema = z.object({
+  id: z.number().int().positive(),
+  date: z
+    .string()
+    .regex(/^\d{4}[-\/]\d{2}[-\/]\d{2}$/)
+    .transform((val) => val.replace("-", "/")),
+  hour: z.string().regex(/^\d{2}:\d{2}$/),
+  realEstate: realEstateSchema,
+  user: userSchema,
 });
 
-const schedulesSchemaReturn = createSchedulesSchema.extend({
-  id: z.number(),
-  userId: z.number(),
-});
+const createScheduleSchema = scheduleSchema
+  .omit({
+    id: true,
+    realEstate: true,
+    user: true,
+  })
+  .extend({
+    realEstateId: z.number().int().positive(),
+  });
 
-const schedulesList = z.object({
-  date: z.string(),
-  hour: z.string(),
-  realEstate: createUserSchema,
-  user: returnRealEstateSchema,
-});
+const scheduleSchemaByRealEstate = z.object({
+  id: z.number().int().positive(),
+  sold: z.boolean(),
+  value: z.string(),
+  size: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  user: returnCreateUserSchema,
+  realEstate: realEstateSchema
+  
+})
 
-export { createSchedulesSchema, schedulesSchemaReturn, schedulesList };
+export {createScheduleSchema,scheduleSchema,scheduleSchemaByRealEstate}

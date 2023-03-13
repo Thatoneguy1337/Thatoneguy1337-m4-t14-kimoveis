@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import createCategoriesService from "../services/categories/createCategory.services";
-import listCategoriesService from "../services/categories/retrieveCategories.services";
+import retrieveCategoriesService from "../services/categories/retrieveCategories.services";
 import retrieveCategoryIdService from "../services/categories/retrieveCategoryById.services";
-import { ICategories } from "../interfaces/categories.interfaces";
+import { ICategories,ICreateCategories } from "../interfaces/categories.interfaces";
 
 const createCategoryControllers = async (req: Request, res: Response) => {
-  const categoryData: ICategories = req.body;
+  const categoryData: ICreateCategories = req.body;
 
   const newCategory = await createCategoriesService(categoryData);
 
@@ -15,14 +15,15 @@ const createCategoryControllers = async (req: Request, res: Response) => {
 const createCategoryIdControllers = async (req: Request, res: Response) => {
   const categoryId: number = parseInt(req.params.id);
 
-  const realEstateByCategory: any = await retrieveCategoryIdService(categoryId);
+  const realEstateByCategory = await retrieveCategoryIdService(categoryId);
   return res.status(200).send(realEstateByCategory);
 };
 
 const retrieveCategoriesControllers = async (req: Request, res: Response) => {
-  const retrieveCategories = await listCategoriesService();
+  
+  const retrieveCategories: Array<ICategories> = await retrieveCategoriesService()
 
-  return res.json(retrieveCategories);
+  return res.status(200).json(retrieveCategories)
 };
 
 export {

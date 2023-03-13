@@ -1,13 +1,13 @@
 import {z} from "zod";
 
-import { createCategoriesSchema, categoriesSchemaReturn} from "../schema/categories.schema";
+import { createCategoriesSchema, categoriesSchema} from "../schema/categories.schema";
 
 
-type ICategories = z.infer<typeof createCategoriesSchema>
-type ICategoriesReturn = z.infer<typeof categoriesSchemaReturn>
+type ICategories = z.infer<typeof categoriesSchema>
+type ICreateCategories = z.infer<typeof createCategoriesSchema>
 
 
-export {ICategories,ICategoriesReturn}
+export {ICategories,ICreateCategories}
 
 
 

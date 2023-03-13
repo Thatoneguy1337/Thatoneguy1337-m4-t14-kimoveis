@@ -1,22 +1,20 @@
-import { IRealEstateList } from "../../interfaces/realEstate.interfaces";
 import { AppDataSource } from "../../data-source";
 import { RealEstate } from "../../entities";
 import { Repository } from "typeorm";
-import { listRealEstate } from "../../schema/real_estate.schema";
 
-const listRealEstateServices = async (): Promise<IRealEstateList> => {
-  const realEstateRepository: Repository<RealEstate> = AppDataSource.getRepository(RealEstate)
 
-  const realEstateList = await realEstateRepository.find({
-      relations: {
-          address: true,
-          category: true
-      }
-  })
+const listRealEstateServices = async (): Promise<RealEstate[]> => {
+  const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate)
 
-  const realEstateListParsed: IRealEstateList = listRealEstate.parse(realEstateList)
+    const findRealEstates: Array<RealEstate> = await realEstateRepo.find({
+        relations: {
+            address: true
+        }
+    })
 
-  return realEstateListParsed
+
+
+    return findRealEstates
 };
 
 

@@ -1,58 +1,68 @@
 import {
+  ICreateRealEstate,
   IRealEstate,
   IRealEstateReturn,
 } from "../../interfaces/realEstate.interfaces";
 import { AppDataSource } from "../../data-source";
 import { Category, Address, RealEstate } from "../../entities";
 import { Repository } from "typeorm";
-import { returnRealEstateSchema } from "../../schema/real_estate.schema";
 import { AppError } from "../../error";
+import { createAddressSchema } from "../../schema/adresses.schema";
+import { createRealEstateSchema, returnRealEstateSchema } from "../../schema/real_estate.schema";
 
-const createRealEstateService = async (
-  realEstateData: IRealEstate
-): Promise<IRealEstateReturn> => {
-  
-  const realEstateRepository: Repository<RealEstate> =
-    AppDataSource.getRepository(RealEstate);
-  
-  const addressRepository: Repository<Address> =
-    AppDataSource.getRepository(Address);
-  
-  const categoryRepository: Repository<Category> =
-    AppDataSource.getRepository(Category);
 
-  const foundAddress = await addressRepository.findOneBy({
-    ...realEstateData.address,
-    number: realEstateData.address.number ? realEstateData.address.number : "",
-  });
+const createRealStateService = async (payload: ICreateRealEstate): Promise<IRealEstateReturn> => {
 
-  if (foundAddress) {
-    throw new AppError("Address already exists", 409);
+    const addressRepo: Repository<Address> = AppDataSource.getRepository(Address)
+  
+    const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate)
+  
+    const categoryRepo: Repository<Category> = AppDataSource.getRepository(Category)
+  
+  if (payload.address.number) {
+      
+      const addressExists: Address | null = await addressRepo.findOne({
+        where:{
+            street: payload.address.street,
+            number: payload.address.number, 
+            city: payload.address.city
+        }
+      });
+    
+      if(addressExists){
+        throw new AppError(
+          "Address already exists",
+          409
+        );
+      }
   }
-
-  const address: Address = addressRepository.create(realEstateData.address);
-  await addressRepository.save(address);
-
-  const foundCat: Category | null = await categoryRepository.findOneBy({
-    id: realEstateData.categoryId,
-  });
-
-  if (!foundCat) {
-    throw new AppError("Category not found", 404);
+  
+    const newaddress = createAddressSchema.parse(payload.address)
+    const address: Address = addressRepo.create(newaddress)
+    await addressRepo.save(address)
+  
+    const category: Category | null = await categoryRepo.findOneBy({
+        id: payload.categoryId
+  })
+  
+  if(!category){
+      throw new AppError('Category not found', 404)
   }
-
-  const realEstate: RealEstate = realEstateRepository.create({
-    ...realEstateData,
-    address: address,
-    category: foundCat,
-  });
-
-  await realEstateRepository.save(realEstate);
-
-  const newRealEstate: IRealEstateReturn =
-    returnRealEstateSchema.parse(RealEstate);
-
-  return newRealEstate;
-};
-
-export default createRealEstateService;
+  
+  const { size, value, sold } = createRealEstateSchema.parse(payload)
+  
+  const realEstate: RealEstate = realEstateRepo.create({
+      value: value,
+      size: size,
+      sold: sold,
+      address: address,
+      category: category
+  })
+  
+  await realEstateRepo.save(realEstate)
+    
+  const responseRealEstate = returnRealEstateSchema.parse(realEstate)
+  return responseRealEstate
+  }
+  
+  export default createRealStateService;

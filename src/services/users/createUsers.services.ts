@@ -1,19 +1,22 @@
-import { IUser, IUserReturn } from "../../interfaces/user.interfaces";
+import { hashSync } from "bcryptjs";
+import { ICreateUser, IReturnCreateUser } from "../../interfaces/user.interfaces";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { Repository } from "typeorm";
-import { returnUserSchema } from "../../schema/users.schema";
+import { returnCreateUserSchema } from "../../schema/users.schema";
 
-const createUserService = async (userData: IUser): Promise<IUserReturn> => {
-  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+const createUserService = async (payload: ICreateUser): Promise<IReturnCreateUser> => {
+  const userRepo: Repository<User> = AppDataSource.getRepository(User)
 
-  const user: User = userRepository.create(userData);
+  const hashedPassword = hashSync(payload.password)
 
-  await userRepository.save(user);
+  const user: User = userRepo.create({ ...payload, password: hashedPassword })
 
-  const newUser = returnUserSchema.parse(user);
+  await userRepo.save(user)
 
-  return newUser;
+  const newUser = returnCreateUserSchema.parse(user)
+
+  return newUser
 };
 
 export default createUserService;

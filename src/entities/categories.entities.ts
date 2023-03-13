@@ -5,7 +5,7 @@ class Category {
   @PrimaryGeneratedColumn("increment")
   id: number;
 
-  @Column({ type:"varchar", length: 45, nullable: false })
+  @Column({ type:"varchar", length: 45, unique: true})
   name: string;
   
   @OneToMany(() => RealEstate, realEstates => realEstates.category)

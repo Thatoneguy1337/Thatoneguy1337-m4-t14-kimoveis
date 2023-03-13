@@ -1,29 +1,27 @@
 import { Repository } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
-import { IUserReturn, IUserUpdate } from "../../interfaces/user.interfaces";
-import { returnUserSchema } from "../../schema/users.schema";
+import { IReturnCreateUser, IUserUpdate } from "../../interfaces/user.interfaces";
+import { returnCreateUserSchema, updateUserSchema } from "../../schema/users.schema";
 
 const updateUserService = async (
-  newUserData: IUserUpdate,
+  payload: IUserUpdate,
   idUser: number
-): Promise<IUserReturn> => {
-  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+): Promise<IReturnCreateUser> => {
+  const userRepo: Repository<User> = AppDataSource.getRepository(User);
 
-  const oldUserData = await userRepository.findOneBy({
-    id: idUser,
+  const user = await userRepo.findOneBy({
+      id: idUser
   });
 
-  const user = userRepository.create({
-    ...oldUserData,
-    ...newUserData,
-  });
+  const updateUser = userRepo.create({
+      ...user,
+      ...payload
+  })
 
-  await userRepository.save(user);
+  await userRepo.save(updateUser)
 
-  const updatedUser = returnUserSchema.parse(user);
-
-  return updatedUser;
+  return returnCreateUserSchema.parse(updateUser)
 };
 
 export default updateUserService;

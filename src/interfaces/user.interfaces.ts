@@ -1,16 +1,17 @@
 import { z } from "zod";
 import {
-  userSchema,
-  createUserSchema,
-  returnUserSchema,
-  userUpdateSchema,
-  returnAllUsersSchema,
+  createUserSchema, returnCreateUserSchema, updateUserSchema, userListSchema, userSchema
 } from "../schema/users.schema";
 import { DeepPartial } from "typeorm";
 
-type IUser = z.infer<typeof createUserSchema>;
-type IUserReturn = z.infer<typeof returnUserSchema>;
-type IUsersReturn = z.infer<typeof returnAllUsersSchema>;
-type IUserUpdate = DeepPartial<IUser>;
+ type IUser = z.infer<typeof userSchema>
 
-export { IUser, IUserReturn, IUsersReturn, IUserUpdate };
+type ICreateUser = z.infer<typeof createUserSchema>
+
+type IReturnCreateUser = z.infer<typeof returnCreateUserSchema>
+
+type IListUsers = z.infer<typeof userListSchema>
+
+type IUserUpdate = DeepPartial<ICreateUser>
+
+export { IUser, ICreateUser, IReturnCreateUser, IUserUpdate,IListUsers };

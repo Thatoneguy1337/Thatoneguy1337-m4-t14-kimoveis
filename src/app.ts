@@ -10,7 +10,7 @@ const app: Application = express();
 app.use(express.json());
 app.use("/users",userRoutes);
 app.use("/login",loginRoutes);
-app.use("/category",categoryRoutes);
+app.use("/categories",categoryRoutes);
 app.use("/realEstate",realEstateRoutes);
 app.use("/schedules",scheduleRouters)
 app.use(handleErrors);

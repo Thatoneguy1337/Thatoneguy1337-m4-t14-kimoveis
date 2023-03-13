@@ -1,16 +1,18 @@
 import { Repository } from "typeorm";
 import { Category } from "../../entities";
 import { AppDataSource } from "../../data-source";
-import { categoriesSchemaReturn  } from "../../schema/categories.schema";
-import { ICategoriesReturn } from "../../interfaces/categories.interfaces";
+import { categoriesListSchema } from "../../schema/categories.schema";
+import { ICategories } from "../../interfaces/categories.interfaces";
 
-const listCategoryService = async (): Promise<ICategoriesReturn> => {
-  const userRepository: Repository<Category> =
-    AppDataSource.getRepository(Category);
+const retrieveCategoriesService = async (): Promise<ICategories[]> => {
 
-  const users = categoriesSchemaReturn .parse(userRepository);
+  const categoryRepo: Repository<Category> = AppDataSource.getRepository(Category)
 
-  return users;
-};
+  const findCategories: Array<ICategories> = await categoryRepo.find()
 
-export default listCategoryService;
+  const categories = categoriesListSchema.parse(findCategories)
+
+  return categories
+}
+
+export default retrieveCategoriesService;

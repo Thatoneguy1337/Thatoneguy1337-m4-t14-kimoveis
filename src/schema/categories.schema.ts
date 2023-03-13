@@ -1,14 +1,15 @@
 import { z } from "zod";
 
-const createCategoriesSchema = z.object({
-  name: z.string().min(5).max(45),
+const categoriesSchema = z.object({
+  id: z.number().positive(),
+  name: z.string().max(45),
 });
 
-const categoriesSchemaReturn = createCategoriesSchema.extend({
-  id: z.number(),
+const createCategoriesSchema = categoriesSchema.omit({
+  id: true,
 });
 
+export const categoriesListSchema = categoriesSchema.array()
 
 
-
-export { createCategoriesSchema, categoriesSchemaReturn};
+export { categoriesSchema, createCategoriesSchema};

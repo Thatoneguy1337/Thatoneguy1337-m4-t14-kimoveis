@@ -3,10 +3,10 @@ import createUserServices from "../services/users/createUsers.services";
 import listUsersService from "../services/users/retrieveUsers.services";
 import deleteUserService from "../services/users/deleteUsers.services";
 import updateUserService from "../services/users/updateUsers.services"
-import { IUser, IUserUpdate } from "../interfaces/user.interfaces";
+import { ICreateUser, IListUsers, IReturnCreateUser } from "../interfaces/user.interfaces";
 
 const createUserController = async (req: Request, res: Response) => {
-  const userData: IUser = req.body;
+  const userData: ICreateUser = req.body;
 
   const newUser = await createUserServices(userData);
 
@@ -14,17 +14,16 @@ const createUserController = async (req: Request, res: Response) => {
 };
 
 const retrieveUserController = async (req: Request, res: Response) => {
-  const usersList = await listUsersService();
+  const usersList: IListUsers = await listUsersService();
 
   return res.json(usersList);
 };
 
 const updateUserController = async (req: Request, res: Response) => {
 
-    const userData: IUserUpdate = req.body
     const idUser = parseInt(req.params.id)
 
-    const updatedUser = await updateUserService(userData, idUser)
+    const updatedUser = await updateUserService(req.body, idUser)
 
     return res.json(updatedUser)
 }

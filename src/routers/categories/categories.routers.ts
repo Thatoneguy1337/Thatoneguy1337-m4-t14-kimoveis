@@ -2,7 +2,7 @@ import { Router } from "express";
 import {
   createCategoryControllers,
   retrieveCategoriesControllers,
-  createCategoryIdControllers
+  createCategoryIdControllers,
 } from "../../controllers/categories.controllers";
 import verifyDataMiddleware from "../../middlewares/verifyInputData.middlewares";
 import verifyAdminPermission from "../../middlewares/verifyAdmin.middlewares";
@@ -12,8 +12,15 @@ import { createCategoriesSchema } from "../../schema/categories.schema";
 
 const categoryRouter: Router = Router();
 
-categoryRouter.post("",verifyTokenMiddleware,verifyDataMiddleware(createCategoriesSchema),createCategoryControllers);
-categoryRouter.get("",verifyAdminPermission,retrieveCategoriesControllers);
-categoryRouter.get("/:id/realEstate",verifyCategoryExist,createCategoryIdControllers)
+categoryRouter.post(
+  "",
+  verifyTokenMiddleware,
+  verifyAdminPermission,
+  verifyDataMiddleware(createCategoriesSchema),
+  verifyCategoryExist,
+  createCategoryControllers
+);
+categoryRouter.get("", retrieveCategoriesControllers);
+categoryRouter.get("/:id/realEstate", createCategoryIdControllers);
 
-export default categoryRouter
+export default categoryRouter;
