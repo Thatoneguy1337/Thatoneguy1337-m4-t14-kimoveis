@@ -36,7 +36,7 @@ class RealEstate {
   createdAt: string;
 
   @UpdateDateColumn({type: "date"})
-  UpdateDateColumn: string;
+  updatedAt: string;
 
   @OneToOne(() => Adress)
   @JoinColumn()

@@ -11,7 +11,7 @@ import { createAddressSchema } from "../../schema/adresses.schema";
 import { createRealEstateSchema, returnRealEstateSchema } from "../../schema/real_estate.schema";
 
 
-const createRealStateService = async (payload: ICreateRealEstate): Promise<IRealEstateReturn> => {
+const createRealStateService = async (payload: ICreateRealEstate): Promise<RealEstate> => {
 
     const addressRepo: Repository<Address> = AppDataSource.getRepository(Address)
   
@@ -49,20 +49,19 @@ const createRealStateService = async (payload: ICreateRealEstate): Promise<IReal
       throw new AppError('Category not found', 404)
   }
   
-  const { size, value, sold } = createRealEstateSchema.parse(payload)
+  const { size, value } = createRealEstateSchema.parse(payload)
   
   const realEstate: RealEstate = realEstateRepo.create({
       value: value,
       size: size,
-      sold: sold,
       address: address,
       category: category
   })
   
   await realEstateRepo.save(realEstate)
     
-  const responseRealEstate = returnRealEstateSchema.parse(realEstate)
-  return responseRealEstate
+  
+  return realEstate
   }
   
   export default createRealStateService;
