@@ -172,6 +172,198 @@ yarn test <subpasta>/<arquivo>
 | GET         | Get Schedules          | `/schedules/realEstate/:id`   | Authenticated           |
 
 
+# Rotas que não precisam de autentificação
+
+<h2 align ='center'> Criando usuário </h2>
+ 
+ Nessa aplicação o usuário pode se cadastrar utilizando seu nome e  email  também é possível, definir se o usuário será um administrador 
+ 
+
+```json
+{
+    name: 'Fabio',
+    email: 'fabio@kenzie.com.br',
+    password: '1234',
+    admin: true,
+}
+
+```
+
+`POST /users - FORMATO DA RESPOSTA - STATUS 201`
+
+
+```json
+{
+	"id": 1,
+  "name": 'Fabio',
+  "email": 'fabio@kenzie.com.br',
+  "admin": true,
+  
+}
+```
+
+em caso de erro:
+
+```json
+{
+    name: [This Field is Required] ,
+    email: [This Field is Required],
+    password: [This Field is Required],
+    
+}
+```
+<h2 align ='center'> Login de usuário </h2>
+
+É possível também fazer o login do usuário, e com isso será gerado um token, o que será fundamental para a ter acesso às outras funcionalidades da aplicação
+
+body:
+
+```json
+{
+  "email": "Thal1z3ra@gmail.com",
+  "password": "12345678"
+}
+```
+
+`POST /login - FORMATO DA RESPOSTA - STATUS 201`
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc1NlbGxlciI6dHJ1ZSwiaWF0IjoxNjg4MDYy
+MjE5LCJleHAiOjE2ODgwNjU4MTksInN1YiI6IjEifQ.zfhQ5ZGv6PkRhiB9AgJZAX0n3bfzUohJ_59CW8COpXc",
+  "user_id": 1
+}
+```
+
+# Rotas que precisam de autentificação
+
+
+<h2>Editar usuário</h2>
+
+É possível que o usuário edite a sua conta e mude suas informações pessoais em relação a sua conta dentro da aplicação
+
+
+```json
+{
+    name: 'Ricardo',
+    email: 'fabio@kenzie.com.br',
+    password: '1234',
+    admin: true,
+}
+```
+
+`PATCH /user/:id - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+{   id: 1,
+    name: 'Ricardo',
+    email: 'fabio@kenzie.com.br',
+    password: '1234',
+    admin: true,
+}
+```
+
+
+
+<h2> Postar propriedade </h2>
+
+Esta rota se destina ao administrador, para que ele possa registrar uma propriedade existente, somente o administrador consegue ter acesso a essa rota.
+
+```json
+  {
+    "id": 1,
+    "value": "100000.99",
+    "size": "400",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    categoryToCreate: {
+      name: 'category2',
+    },
+
+   }
+
+```
+
+
+<h2> Listar propriedade </h2>
+
+Nesta rota é possível que o usuário veja quais são as propriedades disponíveis para agendamento e visita.
+
+`GET /realEstate - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+   {
+    "id": 1,
+    "value": "100000.99",
+    "size": "400",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    "categoryToCreate": {
+      name: 'category2',
+    },
+    "created_at": "2024-02-16T00:47:09.762Z",
+    "updatedAt": undefined
+   },
+  {
+    "id": 2,
+    "value": "1600000.00",
+    "size": "12000",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    "categoryToCreate": {
+      name: 'category2',
+    },
+    "created_at": "2024-02-16T00:47:09.762Z",
+    "updatedAt": undefined
+   },
+   {
+    "id": 3,
+    "value": "550000.00",
+    "size": "6000",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    "categoryToCreate": {
+      name: 'category2',
+    },
+    "created_at": "2024-02-16T00:47:09.762Z",
+    "updatedAt": undefined
+   }
+```
+ 
+<h2></h2>
+
+
+
+
+
 
 
 
