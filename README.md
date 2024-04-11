@@ -118,10 +118,25 @@ npm run test <subpasta>/<arquivo>
 yarn test <subpasta>/<arquivo>
 ```
 
-**Caso você queira verificar todas as opções de execução de testes, visite a [Documentação oficial do Jest](https://jestjs.io/docs/cli)**
+## **Endpoints**
 
-Após rodar um dos comandos aparecerá um log no seu terminal, contendo as informações da execução do teste.
+| HTTP Method | Description            | Endpoint                      | Authentication Required |
+| ----------- | ---------------------- | ----------------------------- | ----------------------- |
+| POST        | Register user          | `/users`                      | No Authentication       |
+| POST        | Login user             | `/login`                      | No Authentication       |
+| PATCH       | Update user            | `/users/:id`                  | Authenticated           |
+| GET         | Get user profile       | `/users/profile`              | Authenticated           |
+| GET         | Get user               | `/users/:id`                  | Authenticated           |
+| DELETE      | Delete user            | `/users/:id`                  | Authenticated           |
+| POST        | Create ads             | `/ads`                        | Authenticated           |
+| GET         | List all ads           | `/ads`                        | No Authentication       |
+| GET         | Retrieve ad            | `/ads/:id`                    | Authenticated           |
+| PATCH       | Update ad              | `/ads/:id`                    | Authenticated           |
+| DELETE      | Delete ad              | `/ads/:id`                    | Authenticated           |
 
-**Observação:** O teste pode demorar alguns segundos para ser finalizado. Quanto maior for o teste, mais tempo será consumido para a execução.
 
-### Agora que já sabe como iniciar o seu projeto e rodar os testes, é hora de colocar a mão no código
+
+
+
+
+
