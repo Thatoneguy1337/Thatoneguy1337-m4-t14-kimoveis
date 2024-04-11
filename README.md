@@ -2,7 +2,7 @@
 
   <article style="display: flex, flex-direction: column, justify-content: space-between;">
   
-  <p>Este é um projeto backend, feito no módulo 5 da Kenzie Academy Brasil, afim de  demonstrar as minhas habilidades e conhecimentos que eu adquiri durante 
+  <p>Este é um projeto backend, feito no módulo 4 da Kenzie Academy Brasil, afim de  demonstrar as minhas habilidades e conhecimentos que eu adquiri durante 
   os primeiros meses que eu estudei desenvolvimento backend. 
   Esta é uma API a qual eu criei ao longo de uma semana, cujo, a intenção é criar anúncios de propriedades, agendar horáriso de visitas para tais propriedades e categoriza-las,
   este projeto utiliza-se das seguintes tecnologias: Typescript, TypeORM, ExpressJs e Jest.
