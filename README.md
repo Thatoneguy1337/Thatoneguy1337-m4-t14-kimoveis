@@ -169,7 +169,7 @@ yarn test <subpasta>/<arquivo>
 | GET         | Retrieve Categories    | `/category`                   | Authenticated           |
 | GET         | Get Retrieve Categories| `/category/:id/realEstate`    | Authenticated           |
 | POST        | Create Schedules       | `/schedules`                  | Authenticated           |
-| GET         | Create Schedules       | `/schedules/realEstate/:id`   | Authenticated           |
+| GET         | Get Schedules          | `/schedules/realEstate/:id`   | Authenticated           |
 
 
 
