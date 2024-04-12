@@ -181,10 +181,10 @@ yarn test <subpasta>/<arquivo>
 
 ```json
 {
-    name: 'Fabio',
-    email: 'fabio@kenzie.com.br',
-    password: '1234',
-    admin: true,
+    "name": "Fabio",
+    "email": "fabio@kenzie.com.br",
+    "password": "1234",
+    "admin": true,
 }
 
 ```
@@ -194,9 +194,9 @@ yarn test <subpasta>/<arquivo>
 
 ```json
 {
-	"id": 1,
-  "name": 'Fabio',
-  "email": 'fabio@kenzie.com.br',
+   "id": 1,
+  "name": "Fabio",
+  "email": "fabio@kenzie.com.br",
   "admin": true,
   
 }
@@ -245,24 +245,32 @@ MjE5LCJleHAiOjE2ODgwNjU4MTksInN1YiI6IjEifQ.zfhQ5ZGv6PkRhiB9AgJZAX0n3bfzUohJ_59CW
 
 ```json
 {
-    name: 'Ricardo',
-    email: 'fabio@kenzie.com.br',
-    password: '1234',
-    admin: true,
+    "name": "Ricardo",
+    "email": "fabio@kenzie.com.br",
+    "password": "1234",
+    "admin": true,
 }
 ```
 
 `PATCH /user/:id - FORMATO DA RESPOSTA - STATUS 200`
 
 ```json
-{   id: 1,
-    name: 'Ricardo',
-    email: 'fabio@kenzie.com.br',
-    password: '1234',
-    admin: true,
+{   "id": 1,
+    "name": "Ricardo",
+    "email": "fabio@kenzie.com.br",
+    "password": "1234",
+    "admin": true,
 }
 ```
+<h2>Deletar usuário</h2>
 
+É possível que o usuário delete a sua conta do aplicativo, passando o id do usuário através do parâmetro da requisição
+essa rota não possui retorno.
+
+
+NO BODY
+
+`DELETE /user/:id - FORMATO DA RESPOSTA - STATUS 204 NO RESPONSE`
 
 
 <h2> Postar propriedade </h2>
@@ -316,7 +324,7 @@ Nesta rota é possível que o usuário veja quais são as propriedades disponív
       name: 'category2',
     },
     "created_at": "2024-02-16T00:47:09.762Z",
-    "updatedAt": undefined
+    "updatedAt": "2024-02-16T00:47:09.762Z"
    },
   {
     "id": 2,
@@ -354,24 +362,189 @@ Nesta rota é possível que o usuário veja quais são as propriedades disponív
       name: 'category2',
     },
     "created_at": "2024-02-16T00:47:09.762Z",
-    "updatedAt": undefined
+    "updatedAt": "2024-02-16T00:47:09.762Z"
    }
 ```
  
-<h2></h2>
+<h2>Agendamento de visita</h2>
+
+Nesta rota é possível que o usuário agende uma visita para determinada, propriedade caso ela esteja disponível.
 
 
+```json
+  {
+   date: '2024/06/12',
+   hour: '12:30'
+  }
+
+```
+
+`POST /schedule - FORMATO DA RESPOSTA - STATUS 201`
+
+```json
+    {
+    date: '2024/06/12',
+    hour: '12:30',
+    realEstateId: 1
+   }
+```
+
+<h2>Listar agendamentos</h2>
+
+Nesta rota é possível que o usuário consulte o agendamento de visitas para determinada propriedade caso ela esteja disponível,
+o id da propriedade tem de ser passado através do parâmetro da requisição.
 
 
+```json
+  {
+   date: '2024/06/12',
+   hour: '12:30'
+  }
+
+```
+
+`GET /schedule/realEstate/:id - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+    [
+   {
+    date: '2024/06/12',
+    hour: '12:30',
+    realEstateId: 1
+   },
+    {
+    date: '2024/06/12',
+    hour: '7:30',
+    realEstateId: 2
+   },
+   {
+    date: '2024/08/20',
+    hour: '12:30',
+    realEstateId: 3
+   },
+   {
+    date: '2024/05/19',
+    hour: '15:30',
+    realEstateId: 4
+   },
+   ]
+```
+
+<h2> Criar categoria </h2>
+
+Nesta rota é possível criar uma categoria para atribui-la a uma propriedade, e não é possível
+que uma categoria tenha mais de uma categoria.  
 
 
+```json
+{
+"name": "Apartamento"
+}
+```
+`POST /category - FORMATO DA RESPOSTA - STATUS 201`
 
+```json
+{
+"name": "Apartamento",
+"id": 1
+}
+```
 
+<h2> Listar categoria  </h2>
 
+NO BODY
 
+Esta rota é utilizada para listar as categorias criadas na rota anterior 
 
+`GET /category - FORMATO DA RESPOSTA - STATUS 200`
 
+```json
+[
+{
+"name": "Apartamento",
+"id": 1
+},
+{
+"name": "Casa",
+"id": 2
+},
+{
+"name": "Flat",
+"id": 3
+}
+]
+```
+<h2> Listar categorias na propriedade  </h2>
 
+NO BODY
+
+Esta rota é utilizada para listar as categorias criadas na rota anterior, e listar que  
+
+`GET /category/realEstate/:id - FORMATO DA RESPOSTA - STATUS 200`
+
+```json
+[
+   {
+    "id": 1,
+    "value": "100000.99",
+    "size": "400",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    "categoryToCreate": {
+      name: "Casa",
+    },
+    "created_at": "2024-02-16T00:47:09.762Z",
+    "updatedAt": "2024-02-16T00:47:09.762Z"
+   },
+  {
+    "id": 2,
+    "value": "1600000.00",
+    "size": "12000",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    "categoryToCreate": {
+      name: "Studio",
+    },
+    "created_at": "2024-02-16T00:47:09.762Z",
+    "updatedAt": undefined
+   },
+   {
+    "id": 3,
+    "value": "550000.00",
+    "size": "6000",
+    "sold": "false",
+    "address": {
+      "id": "1",
+      "street": "street",
+      "zipCode": "zipCode",
+      "number": "number",
+      "city": "city",
+      "state": "s0",
+    }
+    "categoryToCreate": {
+      name: "Flat",
+    },
+    "created_at": "2024-02-16T00:47:09.762Z",
+    "updatedAt": "2024-02-16T00:47:09.762Z"
+   }
+]
+```
+
+ 
 
 
 
