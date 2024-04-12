@@ -291,8 +291,8 @@ Esta rota se destina ao administrador, para que ele possa registrar uma propried
       "city": "city",
       "state": "s0",
     }
-    categoryToCreate: {
-      name: 'category2',
+    "categoryToCreate": {
+      "name": "category2",
     },
 
    }
@@ -321,7 +321,7 @@ Nesta rota é possível que o usuário veja quais são as propriedades disponív
       "state": "s0",
     }
     "categoryToCreate": {
-      name: 'category2',
+      "name": "category2",
     },
     "created_at": "2024-02-16T00:47:09.762Z",
     "updatedAt": "2024-02-16T00:47:09.762Z"
@@ -340,7 +340,7 @@ Nesta rota é possível que o usuário veja quais são as propriedades disponív
       "state": "s0",
     }
     "categoryToCreate": {
-      name: 'category2',
+      "name": "category2",
     },
     "created_at": "2024-02-16T00:47:09.762Z",
     "updatedAt": undefined
@@ -359,7 +359,7 @@ Nesta rota é possível que o usuário veja quais são as propriedades disponív
       "state": "s0",
     }
     "categoryToCreate": {
-      name: 'category2',
+      "name": "category2",
     },
     "created_at": "2024-02-16T00:47:09.762Z",
     "updatedAt": "2024-02-16T00:47:09.762Z"
@@ -373,8 +373,8 @@ Nesta rota é possível que o usuário agende uma visita para determinada, propr
 
 ```json
   {
-   date: '2024/06/12',
-   hour: '12:30'
+   "date": "2024/06/12",
+   "hour": "12:30"
   }
 
 ```
@@ -498,7 +498,7 @@ Esta rota é utilizada para listar as categorias criadas na rota anterior, e lis
       "state": "s0",
     }
     "categoryToCreate": {
-      name: "Casa",
+      "name": "Casa",
     },
     "created_at": "2024-02-16T00:47:09.762Z",
     "updatedAt": "2024-02-16T00:47:09.762Z"
@@ -517,7 +517,7 @@ Esta rota é utilizada para listar as categorias criadas na rota anterior, e lis
       "state": "s0",
     }
     "categoryToCreate": {
-      name: "Studio",
+      "name": "Studio",
     },
     "created_at": "2024-02-16T00:47:09.762Z",
     "updatedAt": undefined
@@ -536,7 +536,7 @@ Esta rota é utilizada para listar as categorias criadas na rota anterior, e lis
       "state": "s0",
     }
     "categoryToCreate": {
-      name: "Flat",
+      "name": "Flat",
     },
     "created_at": "2024-02-16T00:47:09.762Z",
     "updatedAt": "2024-02-16T00:47:09.762Z"
