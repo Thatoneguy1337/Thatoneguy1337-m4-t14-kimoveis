@@ -206,9 +206,9 @@ em caso de erro:
 
 ```json
 {
-    name: [This Field is Required] ,
-    email: [This Field is Required],
-    password: [This Field is Required],
+    "name": "[This Field is Required]" ,
+    "email": "[This Field is Required]",
+    "password": "[This Field is Required]",
     
 }
 ```
@@ -383,9 +383,9 @@ Nesta rota é possível que o usuário agende uma visita para determinada, propr
 
 ```json
     {
-    date: '2024/06/12',
-    hour: '12:30',
-    realEstateId: 1
+    "date": "2024/06/12",
+    "hour": "12:30",
+    "realEstateId": 1
    }
 ```
 
@@ -397,8 +397,8 @@ o id da propriedade tem de ser passado através do parâmetro da requisição.
 
 ```json
   {
-   date: '2024/06/12',
-   hour: '12:30'
+   "date": "2024/06/12",
+   "hour": "12:30"
   }
 
 ```
@@ -408,24 +408,24 @@ o id da propriedade tem de ser passado através do parâmetro da requisição.
 ```json
     [
    {
-    date: '2024/06/12',
-    hour: '12:30',
-    realEstateId: 1
+    "date": "2024/06/12",
+    "hour": "12:30",
+    "realEstateId": 1
    },
     {
-    date: '2024/06/12',
-    hour: '7:30',
-    realEstateId: 2
+    "date": "2024/06/12",
+    "hour": "7:30",
+    "realEstateId": 2
    },
    {
-    date: '2024/08/20',
-    hour: '12:30',
-    realEstateId: 3
+    "date": "2024/08/20",
+    "hour": "12:30",
+    "realEstateId": 3
    },
    {
-    date: '2024/05/19',
-    hour: '15:30',
-    realEstateId: 4
+    "date": "2024/05/19",
+    "hour": "15:30",
+    "realEstateId": 4
    },
    ]
 ```
